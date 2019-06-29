@@ -2,6 +2,14 @@
 Headless makes it easy to write experiments ontop of cabal.
 
 ## Usage
+There are a couple of options you can provide when creating a new headless instance  
+`var headless = new Headless(opts)`
+#### opts.temp = false
+store all data in memory
+
+#### opts.completeLog = false
+stream all messages from beginning to end
+
 ```js
 var Headless = require("cabal-headless")
 
