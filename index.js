@@ -27,6 +27,7 @@ function Headless (key, opts) {
 Headless.prototype.post = function (opts) {
   if (!opts) return
   if (typeof opts === 'string') { opts = { message: opts } }
+  opts = JSON.parse(JSON.stringify(opts)) // make a copy
   if (!opts.type) { opts.type = 'chat/text' }
   if (!opts.channel) { opts.channel = 'default' }
   if (!opts.content) { opts.content = {} }
