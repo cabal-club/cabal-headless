@@ -15,7 +15,7 @@ var Headless = require("cabal-headless")
 
 var headless = new Headless(cabalKey, { opts.temp: false })
 headless.post({
-    messageType: "chat/text",
+    type: "chat/text",
     channel: "default",
     message: "welcome to cabal"
 })

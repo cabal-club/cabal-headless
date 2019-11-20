@@ -27,11 +27,11 @@ function Headless (key, opts) {
 Headless.prototype.post = function (opts) {
   if (!opts) return
   if (typeof opts === 'string') { opts = { message: opts } }
-  if (!opts.messageType) { opts.messageType = 'chat/text' }
+  if (!opts.type) { opts.type = 'chat/text' }
   if (!opts.channel) { opts.channel = 'default' }
   this.instance(() => {
     this.cabal.publish({
-      type: opts.messageType,
+      type: opts.type,
       content: {
         channel: opts.channel,
         text: opts.message
