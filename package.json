@@ -1,6 +1,6 @@
 {
   "name": "cabal-headless",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "a headless client for cabal, a distributed p2p group chat",
   "main": "index.js",
   "scripts": {
