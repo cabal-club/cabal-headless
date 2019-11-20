@@ -29,13 +29,16 @@ Headless.prototype.post = function (opts) {
   if (typeof opts === 'string') { opts = { message: opts } }
   if (!opts.type) { opts.type = 'chat/text' }
   if (!opts.channel) { opts.channel = 'default' }
+  if (!opts.content) { opts.content = {} }
+  if (opts.type === 'chat/text') {
+    if (!opts.content.channel) { opts.content.channel = opts.channel }
+    if (!opts.content.text) { opts.content.text = opts.message }
+  }
+
   this.instance(() => {
     this.cabal.publish({
       type: opts.type,
-      content: {
-        channel: opts.channel,
-        text: opts.message
-      }
+      content: opts.content
     })
   })
 }
@@ -69,7 +72,7 @@ Headless.prototype._msgRecv = function (data, cb) {
     this.cabal.getLocalKey((err, local) => {
       if (err) throw err
       if (data.key === local || parseInt(data.value.timestamp) < this.starttime) return
-    cb(data)
+      cb(data)
     })
   })
 }
@@ -81,11 +84,11 @@ Headless.prototype.nick = function (nick) {
 // join swarm
 Headless.prototype.connect = function () {
   this.instance(() => {
-    if (!this.swarm) { 
-        this.cabal.swarm((err, swarm) => { 
-            if (err) throw err
-            this.swarm = swarm 
-        }) 
+    if (!this.swarm) {
+      this.cabal.swarm((err, swarm) => {
+        if (err) throw err
+        this.swarm = swarm
+      })
     }
   })
 }
@@ -114,17 +117,17 @@ Headless.prototype.onPeerDisconnected = function (cb) {
 
 Headless.prototype.onMessageReceived = function (cb) {
   this.instance(() => {
-      this.cabal.messages.events.on('message', (data) => { this._msgRecv(data, cb) })
+    this.cabal.messages.events.on('message', (data) => { this._msgRecv(data, cb) })
   })
 }
 
 Headless.prototype.id = function (cb) {
-    this.instance(() => {
-        this.cabal.getLocalKey((err, key) => {
-            if (err) throw err
-            cb(key)
-        })
+  this.instance(() => {
+    this.cabal.getLocalKey((err, key) => {
+      if (err) throw err
+      cb(key)
     })
+  })
 }
 
 Headless.prototype.peers = function () {
