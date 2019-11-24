@@ -28,7 +28,7 @@ headless.onPeerConnected(function (peer) {
     console.log("peer connected")
 })
 
-headless.onPeerDisonnected(function (peer) {
+headless.onPeerDisconnected(function (peer) {
     console.log("peer disconnected")
 })
 
